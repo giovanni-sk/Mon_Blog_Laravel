@@ -9,10 +9,16 @@
 </head>
 
 <body>
-    <h1>Mon Blog Laravel</h1>
-    <p>
-        <a href="/contact-us">Contactez-nous</a>
-    </p>
+    <header>
+        <h1>Mon Blog Laravel</h1>
+        <nav>
+            <ul>
+                <li><a href="/contact-us">Contact</a></li>
+                <li><a href="/about">A propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <!-- Le contenues de toutes les pages ici -->
     @yield('contenu')
     <!-- Le contenues de toutes les pages ici -->
