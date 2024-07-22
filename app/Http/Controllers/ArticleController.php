@@ -13,20 +13,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = [
-           'article 1' => [
-                "title" => "Titre article 1",
-                "body" => "Contenu de l'article 2"
-            ],
-            'article 2' => [
-                "title" => "Titre article 2",
-                "body" => "Contenu de l'article 2"
-            ],
-            'article 3' => [
-                "title" => "Titre article 3",
-                "body" => "Contenu de l'article 3"
-            ]
-        ];
+        $articles = Article::all();
         return view('layouts.articles',['articles'=>$articles]);
     }
 

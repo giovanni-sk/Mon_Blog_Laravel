@@ -17,7 +17,10 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(10),
+            'body' =>fake()->paragraph(50),
+            'image' =>"public/images/wallls.com_181464.jpg",
+            'user_id' => 1,
         ];
     }
 }
