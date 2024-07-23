@@ -39,9 +39,10 @@ class ArticleController extends Controller
      * Display the specified resource.
      * Afficher une resource spécifique
      */
-    public function show(Article $article)
+    public function show($id)
     {
-        //
+        $article = Article::find($id)->with('comments')->first();
+        return view('articles.show',['article'=>$article]);
     }
 
     /**
