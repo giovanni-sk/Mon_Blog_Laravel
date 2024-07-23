@@ -41,7 +41,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::find($id)->with('comments')->first();
+        $article = Article::with("comments")->find($id);
         return view('articles.show',['article'=>$article]);
     }
 

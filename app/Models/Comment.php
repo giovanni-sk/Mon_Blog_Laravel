@@ -13,4 +13,12 @@ class Comment extends Model
         'user_id',
         'article_id',
     ];
+    //Un commentaire est fait pour un seul article 
+    public function article(){
+        return $this->belongsTo(Article::class);
+    }
+  //Un commentaire appartient à un seul utilisateur (user)
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

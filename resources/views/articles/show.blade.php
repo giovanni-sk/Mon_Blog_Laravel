@@ -8,7 +8,7 @@
         <div class="card-body">
             <h2 class="card-title">{{ $article["title"]}}</h2>
             <p class="card-text">{{$article["body"]}}</p>
-            <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}}</small></p>
+            <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}} </small> par <strong>{{$article->user->name}}</strong></p>
             <!-- <a href="#" class="btn btn-primary">Voir plus</a> -->
         </div>
     </div>
@@ -18,9 +18,10 @@
 
     <div>
         @forelse($article->comments as $comment)
-            <p>User_id: {{$comment["user_id"]}}</p>
+            <p ><strong class="text-primary">{{$comment->user->name}}</strong>
+            <span class="text-bg-dark badge">{{$comment->created_at->diffForHumans()}}</span>
+            </p>
             <p>{{$comment["comment"]}}</p>
-            <p>Commenter le {{$comment["created_at"]}}</p>
             @empty
             <p>Aucun commentaire trouvé</p>
             @endforelse
