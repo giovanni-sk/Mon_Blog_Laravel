@@ -17,13 +17,14 @@
     <h2><label for="comment-input">Commentaires</label></h2>
 
     <div>
-        <pre>@forelse($article->comments as $comment)
+        @forelse($article->comments as $comment)
+            <p>User_id: {{$comment["user_id"]}}</p>
             <p>{{$comment["comment"]}}</p>
             <p>Commenter le {{$comment["created_at"]}}</p>
             @empty
             <p>Aucun commentaire trouvé</p>
             @endforelse
-        </pre>
+        
     </div>
 
     <form action="">
