@@ -15,7 +15,7 @@ class ArticleController extends Controller
     public function index()
     {
         // $articles = Article::orderByDesc('created_at')->get();
-        $articles = Article::latest()->paginate(2);
+        $articles = Article::latest()->paginate(5);
         return view('layouts.articles',['articles'=>$articles]);
     }
 
