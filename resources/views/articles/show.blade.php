@@ -8,10 +8,17 @@
         <img src="{{asset('storage/' . $article->image)}}" class="card-img-top" alt="...">
 @endif
         <div class="card-body">
-            <h2 class="card-title">{{ $article->title}}</h2>
+            <h2 class="card-title">{{ $article->title}}
+                <a href="/articles/{{$article->id}}/edit" class="btn btn-warning ml-3">Editer</a>
+                <form method="post" action="{{route('articles.destroy',$article->id)}}">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger" type="submit">Supprimer</button>
+                </form>
+            </h2>
             <p class="card-text">{{$article->body}}</p>
             <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}} </small> par <strong>{{$article->user->name}}</strong></p>
-            <!-- <a href="#" class="btn btn-primary">Voir plus</a> -->
+            
         </div>
     </div>
 </article>

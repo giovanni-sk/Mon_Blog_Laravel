@@ -30,8 +30,12 @@ Route::controller(PagesController::class)
 
 Route::controller(ArticleController::class)
     ->group(function () {
-        Route::get('/articles', 'index');
-        Route::post('/articles','store');
-        Route::get('/articles/create','create');
-        Route::get('/articles/{id}', 'show');
+        Route::get('/articles', 'index')->name('articles.index');
+        Route::post('/articles','store')->name('articles.store');
+        Route::get('/articles/create','create')->name('articles.create');
+        Route::get('/articles/{article}', 'show')->name('articles.show');
+        Route::get('/articles/{article}/edit', 'edit')->name('articles.edit');
+        Route::patch('/articles/{article}', 'update')->name('articles.update');
+        Route::delete('/articles/{article}', 'destroy')->name('articles.destroy');
+
     });
