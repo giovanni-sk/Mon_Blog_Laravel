@@ -4,7 +4,7 @@
 <article>
     <div class="card mb-5" style="border-style: none;
         box-shadow: 1px 1px 6px #000; font-family:montserrat">
-        <img src="{{$article->image}}" class="card-img-top" alt="...">
+        <img src="{{asset('storage/' . $article->image)}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h2 class="card-title">{{ $article->title}}</h2>
             <p class="card-text">{{$article->body}}</p>

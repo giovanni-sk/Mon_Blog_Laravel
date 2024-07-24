@@ -38,19 +38,20 @@ class ArticleController extends Controller
 
         //Gerer la sauvegarde de l'image d'il y en a  
         if($request->hasFile('image')){
-            $path = $request->file('image')->storePublicly('/images');
+            $path = $request->file('image')->store('images','public');
             $validated['image']=$path;
         }
+// l'utilisateur qui a créer
+        $validated['user_id']=1;
         //Envoyer l'article dans la base de donnée
         Article::create($validated);
 
         // retourne sur la page des articles 
 
-        return redirect('/articles')->with('success' , 'Article créé avec succès !');
+        return redirect('/articles')
+        ->with('success' , 'Article créé avec succès !');
     
-
     }
-
     /**
      * Display the specified resource.
      * Afficher une resource spécifique
