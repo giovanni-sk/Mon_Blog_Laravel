@@ -15,6 +15,10 @@ Articles
 @empty
 @include('articles.partials.no-articles')
 @endforelse
+<!-- {{-- Liens de pagination --}} -->
+<div class="d-flex justify-content-center">
+{{$articles->links()}}
+ </div>
 @endsection
 
 

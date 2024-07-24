@@ -45,7 +45,7 @@ Créer un article
             <label for="image" class="form-label">
                 <h4>Image de l'article</h4>
             </label>
-            <input type="file" class="form-control  @error('image') is-invalid  @enderror "  id="image"   name="image" placeholder="Entrer le corps de votre article">
+            <input type="file" class="form-control  @error('image') is-invalid  @enderror "  id="image"   name="image" >
             <!-- {{-- ca c'est le message d'erreur pour l'image--}} -->
             @error('image')
             <div class="invalid-feedback">
