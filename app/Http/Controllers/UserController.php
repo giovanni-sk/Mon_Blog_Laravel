@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -12,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view("auth.profil");
     }
 
     /**
@@ -50,16 +51,31 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        //
+        if (Auth::user()) {
+            $user = User::find(Auth::user()->id);
+            $user->update([
+                "name" => $request->name,
+                "email" => $request->email
+            ]);
+        }
+        return redirect()->route("profile")->with("success", "Mise a jour reussie");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request ,User $user)
     {
-        //
+        if (Auth::user()) {
+            $user =User::find(Auth::user()->id);
+            $user->delete();
+            $request->session()->invalidate();
+ 
+            $request->session()->regenerateToken();
+         
+            return redirect('/login');
+        }
     }
 }

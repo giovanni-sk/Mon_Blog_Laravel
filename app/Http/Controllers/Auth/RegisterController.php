@@ -19,7 +19,11 @@ class RegisterController extends Controller
         //On récupère les données déjà validées
         $validated = $request->validated();
         //Créer le nouvel utilisateur 
-        User::create($validated);
+        User::create([
+            "name"=> $validated["name"],
+            "email"=> $validated["email"],
+            "password"=> bcrypt($validated["password"]),
+        ]);
 
         //Connecter directement l'utilisateur
         $user = User::where("email", $validated["email"])->first();

@@ -5,10 +5,10 @@ Articles
 @section('contenu')
 
           <h2>Articles</h2>
-          @include('articles.search_results')
           @auth
           <a href="/articles/create" class="btn btn-primary mb-3">Créer un article</a>
           @endauth
+          @include('articles.partials.searchbar')
 @forelse($articles as $article)
 @include('articles.partials.index')
 @empty

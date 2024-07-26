@@ -6,19 +6,22 @@
         box-shadow: 1px 1px 6px #000; font-family:montserrat">
         @if($article->image)
         <img src="{{asset('storage/' . $article->image)}}" class="card-img-top" alt="...">
-@endif
+        @endif
         <div class="card-body">
             <h2 class="card-title">{{ $article->title}}
-                <a href="/articles/{{$article->id}}/edit" class="btn btn-warning ml-3">Editer</a>
+               @if($article->user->id==Auth::user()->id)
+               <a href="/articles/{{$article->id}}/edit" class="btn btn-warning ml-3">Editer</a>
                 <form method="post" action="{{route('articles.destroy',$article->id)}}">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit">Supprimer</button>
                 </form>
+
+               @endif
             </h2>
             <p class="card-text">{{$article->body}}</p>
             <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}} </small> par <strong>{{$article->user->name}}</strong></p>
-            
+
         </div>
     </div>
 </article>
@@ -27,14 +30,14 @@
 
     <div>
         @forelse($article->comments as $comment)
-            <p ><strong class="text-primary">{{$comment->user->name}}</strong>
+        <p><strong class="text-primary">{{$comment->user->name}}</strong>
             <span class="text-bg-dark badge">{{$comment->created_at->diffForHumans()}}</span>
-            </p>
-            <p>{{$comment->comment}}</p>
-            @empty
-            <p>Aucun commentaire trouvé</p>
-            @endforelse
-        
+        </p>
+        <p>{{$comment->comment}}</p>
+        @empty
+        <p>Aucun commentaire trouvé</p>
+        @endforelse
+
     </div>
 
     <form action="">

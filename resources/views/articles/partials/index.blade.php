@@ -7,7 +7,7 @@
     <div class="card-body">
       <h2 class="card-title"><a href="/articles/{{$article['id']}}">{{ $article["title"]}}</a></h2>
       <p class="card-text text-truncate">{{$article["body"]}}</p>
-      <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}}</small> par <strong>{{$article->user->name}}</strong></p>
+      <p class="card-text"><small class="text-body-secondary">Créer le {{$article->created_at}}</small> @if($article->user) par <strong>{{$article->user->name}} @endif</strong></p>
     </div>
   </div>
 </article>

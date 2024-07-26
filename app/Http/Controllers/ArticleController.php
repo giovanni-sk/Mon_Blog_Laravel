@@ -116,9 +116,9 @@ class ArticleController extends Controller
         return redirect()->route("articles.index")->with("success","Article supprimer avec succès");
     }
     //Methode pour effectuer une recherche dans la base de donnée
-    public function search (Request $request) {
+    public function search (Request $request, Article $article) {
         $query = $request->input('query');
-        $article = Article::where('title','LIKE','%'.$query.'%')->get();
-        return view('articles.search_results');
+        $articles = Article::where('title','LIKE','%'.$query.'%')->get();
+        return view('articles.search_results',compact('articles'));
     }
 }
