@@ -8,13 +8,13 @@
         <img src="{{asset('storage/' . $article->image)}}" class="card-img-top" alt="...">
         @endif
         <div class="card-body">
-            <h2 class="card-title">{{ $article->title}}
+            <h2 class="card-title d-flex ">{{ $article->title}}
                @if($article->user->id==Auth::user()->id)
-               <a href="/articles/{{$article->id}}/edit" class="btn btn-warning ml-3">Editer</a>
+               <a href="/articles/{{$article->id}}/edit" class="btn btn-warning mx-3">Editer</a>
                 <form method="post" action="{{route('articles.destroy',$article->id)}}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" type="submit">Supprimer</button>
+                    <button class="btn btn-danger mx-3" type="submit">Supprimer</button>
                 </form>
 
                @endif
