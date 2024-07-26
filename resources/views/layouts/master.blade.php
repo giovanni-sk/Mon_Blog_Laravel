@@ -47,6 +47,7 @@
                     </div>
           @endif
         <!-- Le contenues de toutes les pages ici -->
+         
         @yield('contenu')
         <!-- Le contenues de toutes les pages ici -->
     </main>

@@ -3,7 +3,9 @@
 Articles
 @endsection
 @section('contenu')
+
           <h2>Articles</h2>
+          @include('articles.search_results')
           <a href="/articles/create" class="btn btn-primary mb-3">Créer un article</a>
 @forelse($articles as $article)
 @include('articles.partials.index')

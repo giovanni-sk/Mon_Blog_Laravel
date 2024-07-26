@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\SessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +39,11 @@ Route::controller(ArticleController::class)
         Route::get('/articles/{article}/edit', 'edit')->name('articles.edit');
         Route::patch('/articles/{article}', 'update')->name('articles.update');
         Route::delete('/articles/{article}', 'destroy')->name('articles.destroy');
-
+        Route::get('/articles/search','search')->name('articles.search');
     });
+
+    //Route d'authentification
+    Route::get('/register',[RegisterController::class,'index'])->name('register');
+    Route::post('/register',[RegisterController::class,'store']);
+    Route::get('/login',[SessionsController::class,'index'])->name('login');
+    Route::post('/login',[SessionsController::class,'login']);
