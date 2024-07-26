@@ -14,9 +14,7 @@ Articles
 @empty
 @include('articles.partials.no-articles')
 @endforelse
-@if(count($articles)>5)
 <div class="d-flex justify-content-center">
     {{$articles->links()}}
 </div>
-@endif
 @endsection
