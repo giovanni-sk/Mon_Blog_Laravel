@@ -18,7 +18,6 @@ class RegisterController extends Controller
     {
         //On récupère les données déjà validées
         $validated = $request->validated();
-   dd($validated);
         //Créer le nouvel utilisateur 
         User::create($validated);
 
@@ -26,6 +25,6 @@ class RegisterController extends Controller
         $user = User::where("email", $validated["email"])->first();
         Auth::login($user);
         //Rediriger l'utilisateur sur la page des articles
-        return redirect()->route("articles.index")->with("success","");
+        return redirect()->route("articles.index")->with("success","Votre compte a été crée");
     }
 }

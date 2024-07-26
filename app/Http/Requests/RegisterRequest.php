@@ -32,25 +32,24 @@ class RegisterRequest extends FormRequest
             "password" => ["required", "confirmed", Password::min(8)->mixedCase()->numbers()->symbols()]
         ];
     }
-
     /**
      * Une fonction qui s'execute après la validation des données
      * @return array
      */
 
-    public function after(): array
-    {
-        return [
-            function (Validator $validator) {
-                if ($validator->fails()) {
-                    //Encrypt le mot de passe
-                    $this->merge([
-                        'password' => bcrypt($this->password)
-                    ]);
-                }
-            }
-        ];
-    }
+    // public function after(): array
+    // {
+    //     return [
+    //         function (Validator $validator) {
+    //             if ($validator->fails()) {
+    //                 //Encrypt le mot de passe
+    //                 $this->merge([
+    //                     'password' => bcrypt($this->password)
+    //                 ]);
+    //             }
+    //         }
+    //     ];
+    // }
 //deuxieme methode
     // protected function passedValidation()
     // {

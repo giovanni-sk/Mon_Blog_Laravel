@@ -45,7 +45,7 @@ class ArticleController extends Controller
             $validated['image'] = $path;
         }
         // l'utilisateur qui a créer
-        $validated['user_id'] = 1;
+        $validated['user_id'] = auth()->id();
         //Envoyer l'article dans la base de donnée
         Article::create($validated);
 

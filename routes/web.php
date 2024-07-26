@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -33,17 +34,20 @@ Route::controller(PagesController::class)
 Route::controller(ArticleController::class)
     ->group(function () {
         Route::get('/articles', 'index')->name('articles.index');
-        Route::post('/articles','store')->name('articles.store');
-        Route::get('/articles/create','create')->name('articles.create');
-        Route::get('/articles/{article}', 'show')->name('articles.show');
-        Route::get('/articles/{article}/edit', 'edit')->name('articles.edit');
-        Route::patch('/articles/{article}', 'update')->name('articles.update');
-        Route::delete('/articles/{article}', 'destroy')->name('articles.destroy');
+        Route::post('/articles','store')->name('articles.store')->middleware('auth');
+        Route::get('/articles/create','create')->name('articles.create')->middleware('auth');
+        Route::get('/articles/{article}', 'show')->name('articles.show')->middleware('auth');
+        Route::get('/articles/{article}/edit', 'edit')->name('articles.edit')->middleware('auth');
+        Route::patch('/articles/{article}', 'update')->name('articles.update')->middleware('auth');
+        Route::delete('/articles/{article}', 'destroy')->name('articles.destroy')->middleware('auth');
         Route::get('/articles/search','search')->name('articles.search');
     });
 
     //Route d'authentification
-    Route::get('/register',[RegisterController::class,'index'])->name('register');
-    Route::post('/register',[RegisterController::class,'store']);
-    Route::get('/login',[SessionsController::class,'index'])->name('login');
-    Route::post('/login',[SessionsController::class,'login']);
+    Route::get('/register',[RegisterController::class,'index'])->name('register')->middleware('guest');
+    Route::post('/register',[RegisterController::class,'store'])->middleware('guest');
+    Route::get('/login',[SessionsController::class,'index'])->name('login')->middleware('guest');
+    Route::post('/login',[SessionsController::class,'login'])->middleware('guest');
+    Route::post('/logout', [SessionsController::class, 'logout'])->name('logout')->middleware('auth');
+
+    Route::get('auth/profil',[UserController::class,'index'])->name('profile')->middleware('auth');
