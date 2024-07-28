@@ -118,7 +118,7 @@ Pour mettre en place un système de recherche dans Laravel pour votre blog, vous
 7. **Validation (optionnel)** :
    Vous pouvez ajouter de la validation pour le champ de recherche pour gérer les cas où aucun terme n'est entré.
 
-8. **Styling et améliorations** :
-   Ajoutez du style CSS pour rendre votre formulaire de recherche attrayant et assurez-vous de gérer les cas où aucune correspondance n'est trouvée dans les résultats.
 
-En suivant ces étapes, vous devriez pouvoir créer un système de recherche simple mais fonctionnel pour votre blog basé sur Laravel. Adapté-le selon vos besoins spécifiques et les détails de votre application.
+
+
+
