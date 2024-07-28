@@ -64,7 +64,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
+## Documentation pour mettre en place une search dans le blog 
 Pour mettre en place un système de recherche dans Laravel pour votre blog, vous pouvez suivre ces étapes :
 
 1. **Configuration de la base de données** :
