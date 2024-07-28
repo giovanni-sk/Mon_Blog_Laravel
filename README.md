@@ -220,5 +220,149 @@ class CommentController extends Controller
 </form>
 ```
  
+## Pour ajouter une fonctionnalité de "like" aux commentaires dans votre application Laravel, vous pouvez suivre ces étapes :
 
+1. **Modèle de Données :**
+   - Créez un modèle `Like` pour représenter les likes liés à chaque commentaire.
+
+2. **Relations :**
+   - Définissez une relation "one-to-many" entre les commentaires et les likes. Chaque commentaire peut avoir plusieurs likes.
+
+3. **Migration de la Base de Données :**
+   - Créez une migration pour la table des likes (`likes`) qui inclut les colonnes nécessaires comme `comment_id`, `user_id`, etc.
+
+4. **Contrôleur :**
+   - Créez un contrôleur pour gérer les actions liées aux likes, comme l'ajout d'un like à un commentaire.
+
+5. **Routes :**
+   - Définissez les routes nécessaires dans votre fichier `web.php` pour gérer les actions liées aux likes, comme l'ajout et la suppression de likes.
+
+6. **Vues :**
+   - Modifiez vos vues pour inclure des boutons de "like" à côté de chaque commentaire et afficher le nombre de likes.
+
+7. **Traitement des Likes :**
+   - Dans votre contrôleur, créez des méthodes pour ajouter et retirer des likes.
+
+Voici un exemple de code pour chacune de ces étapes :
+
+**Modèle `Like` :**
+```php
+class Like extends Model
+{
+    protected $fillable = ['user_id', 'comment_id'];
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+}
+```
+
+**Modèle `Comment` avec la relation `likes` :**
+```php
+class Comment extends Model
+{
+    protected $fillable = ['user_id', 'article_id', 'content'];
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+}
+```
+
+**Migration pour la table `likes` :**
+```php
+public function up()
+{
+    Schema::create('likes', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->foreignId('comment_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+    });
+}
+
+public function down()
+{
+    Schema::dropIfExists('likes');
+}
+```
+
+**Contrôleur `LikeController` :**
+```php
+class LikeController extends Controller
+{
+    public function store(Request $request, Comment $comment)
+    {
+        $comment->likes()->create([
+            'user_id' => auth()->id(),
+        ]);
+
+        return back()->with('success', 'Commentaire aimé avec succès.');
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->likes()->where('user_id', auth()->id())->delete();
+
+        return back()->with('success', 'Like retiré avec succès.');
+    }
+}
+```
+
+**Routes dans `web.php` :**
+```php
+use App\Http\Controllers\LikeController;
+
+Route::post('/comments/{comment}/likes', [LikeController::class, 'store'])->name('likes.store');
+Route::delete('/comments/{comment}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
+```
+
+**Vue `show.blade.php` (Détails de l'Article) avec les boutons de "like" :**
+```php
+<h1>{{ $article->title }}</h1>
+<p>{{ $article->content }}</p>
+
+<!-- Affichage des commentaires -->
+@if($article->comments->count() > 0)
+    <h2>Commentaires</h2>
+    <ul>
+        @foreach($article->comments as $comment)
+            <li>
+                {{ $comment->content }}
+                <div>
+                    <!-- Bouton pour liker le commentaire -->
+                    @if($comment->likes->contains('user_id', auth()->id()))
+                        <form action="{{ route('likes.destroy', $comment->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Unlike</button>
+                        </form>
+                    @else
+                        <form action="{{ route('likes.store', $comment->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit">Like</button>
+                        </form>
+                    @endif
+                    <!-- Afficher le nombre de likes -->
+                    <span>{{ $comment->likes->count() }} likes</span>
+                </div>
+            </li>
+        @endforeach
+    </ul>
+@endif
+
+<!-- Formulaire pour ajouter un commentaire -->
+<form action="{{ route('comments.store', $article->id) }}" method="POST">
+    @csrf
+    <textarea name="content" rows="4" cols="50" placeholder="Votre commentaire"></textarea>
+    <button type="submit">Ajouter un commentaire</button>
+</form>
+```
 
