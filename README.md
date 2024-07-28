@@ -119,6 +119,106 @@ Pour mettre en place un système de recherche dans Laravel pour votre blog, vous
    Vous pouvez ajouter de la validation pour le champ de recherche pour gérer les cas où aucun terme n'est entré.
 
 
+## Pour implémenter la fonctionnalité de commentaires sur votre blog Laravel, voici les étapes générales que vous pouvez suivre :
 
+1. **Modèles de Données :**
+   - Créez un modèle `Article` pour représenter vos articles dans la base de données.
+   - Créez un modèle `Comment` pour représenter les commentaires liés à chaque article.
+
+2. **Relations :**
+   - Définissez une relation "one-to-many" entre les articles et les commentaires. Chaque article peut avoir plusieurs commentaires.
+
+3. **Migration de la Base de Données :**
+   - Créez une migration pour la table des commentaires (`comments`) qui inclut les colonnes nécessaires comme `article_id`, `user_id` (si vous avez un système d'utilisateurs), `content`, etc.
+
+4. **Contrôleur :**
+   - Créez un contrôleur pour gérer les actions liées aux commentaires. Vous aurez probablement des méthodes pour afficher les commentaires d'un article spécifique, ajouter un nouveau commentaire, etc.
+
+5. **Routes :**
+   - Définissez les routes nécessaires dans votre fichier `web.php` pour gérer les actions liées aux commentaires comme l'affichage et l'ajout de commentaires.
+
+6. **Vues :**
+   - Créez les vues nécessaires pour afficher les commentaires sous chaque article et pour permettre aux utilisateurs d'ajouter de nouveaux commentaires.
+   - Vous aurez besoin d'une vue pour afficher tous les commentaires d'un article particulier lorsque l'utilisateur clique sur l'article pour voir les détails complets.
+
+7. **Formulaire de Commentaire :**
+   - Créez un formulaire dans la vue de détails de l'article (`show.blade.php` par exemple) pour permettre aux utilisateurs de soumettre de nouveaux commentaires.
+   - Le formulaire doit être soumis à une route qui gère l'ajout de commentaires.
+
+8. **Traitement des Commentaires :**
+   - Dans votre contrôleur, créez une méthode pour traiter le formulaire de commentaire et enregistrer le nouveau commentaire dans la base de données.
+
+9. **Affichage des Commentaires :**
+   - Dans la vue d'affichage des détails de l'article, itérez sur la liste des commentaires associés à cet article et affichez-les.
+
+Voici un exemple simplifié de ce à quoi cela pourrait ressembler en termes de code :
+
+**Modèle `Article` :**
+```php
+class Article extends Model
+{
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+}
+```
+
+**Modèle `Comment` :**
+```php
+class Comment extends Model
+{
+    protected $fillable = ['user_id', 'article_id', 'content'];
+    
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+}
+```
+
+**Contrôleur pour les Commentaires :**
+```php
+class CommentController extends Controller
+{
+    public function store(Request $request, Article $article)
+    {
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+        ]);
+        
+        $article->comments()->create([
+            'user_id' => auth()->id(), // Si vous avez un système d'authentification
+            'content' => $validatedData['content'],
+        ]);
+        
+        return back()->with('success', 'Commentaire ajouté avec succès.');
+    }
+}
+```
+
+**Vue `show.blade.php` (Détails de l'Article) :**
+```php
+<h1>{{ $article->title }}</h1>
+<p>{{ $article->content }}</p>
+
+<!-- Affichage des commentaires -->
+@if($article->comments->count() > 0)
+    <h2>Commentaires</h2>
+    <ul>
+        @foreach($article->comments as $comment)
+            <li>{{ $comment->content }}</li>
+        @endforeach
+    </ul>
+@endif
+
+<!-- Formulaire pour ajouter un commentaire -->
+<form action="{{ route('comments.store', $article->id) }}" method="POST">
+    @csrf
+    <textarea name="content" rows="4" cols="50" placeholder="Votre commentaire"></textarea>
+    <button type="submit">Ajouter un commentaire</button>
+</form>
+```
+ 
 
 
