@@ -6,6 +6,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SessionsController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,8 @@ Route::controller(ArticleController::class)
         Route::get('/articles/{article}/edit', 'edit')->name('articles.edit')->middleware('auth');
         Route::patch('/articles/{article}', 'update')->name('articles.update')->middleware('auth');
         Route::delete('/articles/{article}', 'destroy')->name('articles.destroy')->middleware('auth');
-    });
+        });
+    Route::post('/comments',[CommentController::class,'store'])->name('comments.create')->middleware('auth');
 
     //Route d'authentification
     Route::get('/register',[RegisterController::class,'index'])->name('register')->middleware('guest');
@@ -49,7 +51,7 @@ Route::controller(ArticleController::class)
     Route::get('/login',[SessionsController::class,'index'])->name('login')->middleware('guest');
     Route::post('/login',[SessionsController::class,'login'])->middleware('guest');
     Route::post('/logout', [SessionsController::class, 'logout'])->name('logout')->middleware('auth');
-
+    
 //Route profil
 
     Route::get('auth/profil',[UserController::class,'index'])->name('profile')->middleware('auth');

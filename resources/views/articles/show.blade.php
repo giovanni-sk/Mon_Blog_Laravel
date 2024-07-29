@@ -2,7 +2,7 @@
 
 @section('contenu')
 <article>
-    <div class="card mb-5" style="border-style: none;
+    <div class="card mb-5 sm-6" style="border-style: none;
         box-shadow: 1px 1px 6px #000; font-family:montserrat">
         @if($article->image)
         <img src="{{asset('storage/' . $article->image)}}" class="card-img-top" alt="...">
@@ -10,11 +10,11 @@
         <div class="card-body">
             <h2 class="card-title d-flex ">{{ $article->title}}
                @if($article->user->id==Auth::user()->id)
-               <a href="/articles/{{$article->id}}/edit" class="btn btn-warning mx-3">Editer</a>
+               <a href="/articles/{{$article->id}}/edit" class="text-warning"><i class="bi bi-pencil-square"></i></a>
                 <form method="post" action="{{route('articles.destroy',$article->id)}}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger mx-3" type="submit">Supprimer</button>
+                    <button class="text-danger" type="submit"><i class="bi bi-trash"></i></button>
                 </form>
 
                @endif
@@ -40,7 +40,9 @@
 
     </div>
 
-    <form action="">
+    <form action="{{route('comments.create')}}" method="post" >
+        @csrf
+        <input type="text" name="article_id" hid value="{{$article->id}}">
         <textarea name="comment" id="comment-input" placeholder="Laissez votre commentaire ici..." class="form-control"></textarea>
         <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
     </form>

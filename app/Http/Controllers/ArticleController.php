@@ -17,7 +17,7 @@ class ArticleController extends Controller
     public function index()
     {
         // $articles = Article::orderByDesc('created_at')->get();
-        $articles = Article::latest()->paginate(5);
+        $articles = Article::latest()->paginate(8);
         return view('layouts.articles', ['articles' => $articles]);
     }
 
@@ -118,7 +118,7 @@ class ArticleController extends Controller
     //Methode pour effectuer une recherche dans la base de donnée
     public function search (Request $request, Article $article) {
         $query = $request->input('query');
-        $articles = Article::where('title','LIKE','%'.$query.'%')->paginate(5);
+        $articles = Article::where('title','LIKE','%'.$query.'%')->paginate(8);
         return view('articles.search_results',compact('articles'));
     }
 }
