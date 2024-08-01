@@ -455,5 +455,70 @@ Route::delete('/comments/{comment}/likes', [LikeController::class, 'destroy'])->
   </div>
 </nav>
 
+## Navbar 
 
+Voici un exemple de navbar simple et réactive (responsive) en utilisant Tailwind CSS. Cette navbar contient un logo et quelques liens de navigation. Elle inclut également un menu burger pour les écrans mobiles.
+
+1. **Installez Tailwind CSS dans votre projet Laravel (si ce n'est pas déjà fait) en suivant les étapes précédentes.**
+
+2. **Créez la structure HTML de la navbar dans votre fichier Blade (par exemple, `resources/views/navbar.blade.php`) :**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Example</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="#" class="text-white text-lg font-bold">Logo</a>
+            <div class="hidden md:flex space-x-4">
+                <a href="#" class="text-gray-300 hover:text-white">Home</a>
+                <a href="#" class="text-gray-300 hover:text-white">About</a>
+                <a href="#" class="text-gray-300 hover:text-white">Services</a>
+                <a href="#" class="text-gray-300 hover:text-white">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-300 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="menu" class="hidden md:hidden mt-2 space-y-2">
+            <a href="#" class="block text-gray-300 hover:text-white">Home</a>
+            <a href="#" class="block text-gray-300 hover:text-white">About</a>
+            <a href="#" class="block text-gray-300 hover:text-white">Services</a>
+            <a href="#" class="block text-gray-300 hover:text-white">Contact</a>
+        </div>
+    </nav>
+    <script>
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
+```
+
+3. **Ajoutez le CSS Tailwind dans votre fichier `resources/css/app.css` :**
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+4. **Compilez vos assets avec Laravel Mix en exécutant la commande suivante :**
+
+```bash
+npm run dev
+```
+
+Ce code crée une navbar avec un menu burger pour les écrans mobiles. Les classes Tailwind CSS utilisées facilitent le style et la réactivité. Vous pouvez ajuster les couleurs, les espacements et d'autres styles en fonction de vos besoins.
 
